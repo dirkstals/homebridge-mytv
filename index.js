@@ -23,7 +23,7 @@ function mytvAccessory(log, config) {
     this.info = {
         manufacturer : "name",
         model : "model",
-        serialnumber : "0";
+        serialnumber : "0"
     };
 
     this.status_url = "http://"+this.ip_address+":1925/"+this.api_version+"/input/key";
