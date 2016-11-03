@@ -25,9 +25,9 @@ function TVAccessory(log, config) {
     this.key_body = JSON.stringify({"key": "Home"});
 
     fetch(this.api_url + "system")
-    .then(function(repsonse){
+    .then(function(repsonse) {
         return response.json();
-    }).then(function(json)) {
+    }).then(function(json) {
         this.info.Manufacturer = json.name;
         this.info.model = json.model;
         this.info.serialnumber = json.serialnumber;
@@ -62,7 +62,7 @@ TVAccessory.prototype = {
         fetch(this.api_url + "sources/current")
         .then(function(repsonse) {
             return response.json();
-        }).then(function(json)) {
+        }).then(function(json) {
             this.log('Current source is %s.', json.id);
             callback(null, json.id);
         });
@@ -73,9 +73,9 @@ TVAccessory.prototype = {
         this.log('Getting volume');
 
         fetch(this.api_url + "/audio/volume")
-        .then(function(repsonse){
+        .then(function(repsonse) {
             return response.json();
-        }).then(function(json)) {
+        }).then(function(json) {
             this.log('Current volume is %s', json.current);
             callback(null, json.current);
         }.bind(this));
@@ -93,7 +93,7 @@ TVAccessory.prototype = {
                 'current': level
             })
         })
-        .then(function(repsonse){
+        .then(function(repsonse) {
             this.log('Volume is set to %s', level);
             callback();
         }.bind(this));
