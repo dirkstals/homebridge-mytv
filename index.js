@@ -1,11 +1,14 @@
 var fetch = require('node-fetch');
 var Service;
-var Characteristic;
+var Characteristic, VolumeCharacteristic;
 
 module.exports = function(homebridge)
 {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
+
+    makeVolumeCharacteristic();
+
     homebridge.registerAccessory("homebridge-mytv", "mytv", mytvAccessory);
 }
 
@@ -119,7 +122,7 @@ mytvAccessory.prototype = {
         		.on('set', this.setSource.bind(this));
 
         switchService
-            .addCharacteristic(new Characteristic.Volume())
+            .addCharacteristic(VolumeCharacteristic)
 					  .on('get', this.getVolume.bind(this))
 					  .on('set', this.setVolume.bind(this));
 
@@ -127,23 +130,21 @@ mytvAccessory.prototype = {
     }
 };
 
-/*
+
 function makeVolumeCharacteristic() {
 
-	VolumeCharacteristic = function() {
-		Characteristic.call(this, 'Volume', '91288267-5678-49B2-8D22-F57BE995AA00');
-		this.setProps({
-			format: Characteristic.Formats.INT,
-			unit: Characteristic.Units.PERCENTAGE,
-			maxValue: 10,
-			minValue: -10,
-			minStep: 1,
-			perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-		});
-		//this.value = this.getDefaultValue();
-		this.value = 1;
-	};
+    VolumeCharacteristic = function() {
+        Characteristic.call(this, 'Volume', '91288267-5678-49B2-8D22-F57BE995AA00');
+        this.setProps({
+            format: Characteristic.Formats.INT,
+            unit: Characteristic.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
 
-	inherits(VolumeCharacteristic, Characteristic);
-}
-*/
+    inherits(VolumeCharacteristic, Characteristic);
+};
