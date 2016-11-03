@@ -102,7 +102,6 @@ mytvAccessory.prototype = {
     getServices: function() {
       	var informationService = new Service.AccessoryInformation();
       	var switchService = new Service.Switch(this.name);
-        var volumeService = new Service.Volume();
 
     		informationService
         		.setCharacteristic(Characteristic.Manufacturer, this.info.manufacturer)
@@ -114,11 +113,32 @@ mytvAccessory.prototype = {
         		.on('get', this.getSource.bind(this))
         		.on('set', this.setSource.bind(this));
 
-        volumeService
-            .addCharacteristic(Characteristic.On)
+        switchService
+            .addCharacteristic(new Characteristic.Volume())
 					  .on('get', this.getVolume.bind(this))
 					  .on('set', this.setVolume.bind(this));
 
       	return [informationService, switchService];
     }
 };
+
+/*
+function makeVolumeCharacteristic() {
+
+	VolumeCharacteristic = function() {
+		Characteristic.call(this, 'Volume', '91288267-5678-49B2-8D22-F57BE995AA00');
+		this.setProps({
+			format: Characteristic.Formats.INT,
+			unit: Characteristic.Units.PERCENTAGE,
+			maxValue: 10,
+			minValue: -10,
+			minStep: 1,
+			perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
+		});
+		//this.value = this.getDefaultValue();
+		this.value = 1;
+	};
+
+	inherits(VolumeCharacteristic, Characteristic);
+}
+*/
