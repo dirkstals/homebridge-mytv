@@ -6,10 +6,10 @@ module.exports = function(homebridge)
 {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-mytv", "TVAccessory", TVAccessory);
+    homebridge.registerAccessory("homebridge-mytv", "mytv", mytvAccessory);
 }
 
-function TVAccessory(log, config) {
+function mytvAccessory(log, config) {
     this.log = log;
     this.config = config;
     this.name = config["name"];
@@ -34,7 +34,7 @@ function TVAccessory(log, config) {
     }.bind(this));
 }
 
-TVAccessory.prototype = {
+mytvAccessory.prototype = {
 
     setSource: function(source, callback, context) {
 
