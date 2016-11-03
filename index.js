@@ -33,10 +33,15 @@ function mytvAccessory(log, config) {
     this.status_url = "http://"+this.ip_address+":1925/"+this.api_version+"/input/key";
     this.key_body = JSON.stringify({"key": "Home"});
 
+    this.log('Getting system info');
+
     fetch(this.api_url + "system")
     .then(function(response) {
         return response.json();
     }).then(function(json) {
+        this.log('System name is %s', json.name);
+        this.log('System model is %s', json.model);
+        this.log('System serialnumber is %s', json.serialnumber);
         this.info.manufacturer = json.name;
         this.info.model = json.model;
         this.info.serialnumber = json.serialnumber;
