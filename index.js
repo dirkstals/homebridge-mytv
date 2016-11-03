@@ -1,3 +1,4 @@
+var fetch = require('node-fetch');
 var Service;
 var Characteristic;
 
@@ -25,9 +26,11 @@ function TVAccessory(log, config) {
 
     fetch(this.api_url + "system")
     .then(function(repsonse){
-        this.info.Manufacturer = response.name;
-        this.info.model = response.model;
-        this.info.serialnumber = response.serialnumber;
+        return response.json();
+    }).then(function(json)) {
+        this.info.Manufacturer = json.name;
+        this.info.model = json.model;
+        this.info.serialnumber = json.serialnumber;
     }.bind(this));
 }
 
@@ -35,7 +38,7 @@ TVAccessory.prototype = {
 
     setSource: function(source, callback, context) {
 
-        this.log('source' + source);
+        this.log('Setting source to %s.', source);
 
         fetch(this.api_url + "sources/current", {
             method: 'POST',
@@ -44,19 +47,24 @@ TVAccessory.prototype = {
                 'id': source
             })
         }).then(function (response) {
-            console.log(response);
-            callback(null, response);
-        }).catch(function(error) {
+            this.log('Source set to %s.', source);
+            callback();
+        }.bind(this)).catch(function(error) {
             this.log(error);
             callback(error);
-        })
+        }.bind(this));
     },
 
     getSource: function(callback, context) {
 
+        this.log('Getting source');
+
         fetch(this.api_url + "sources/current")
-        .then(function(repsonse){
-            callback(null, response.id);
+        .then(function(repsonse) {
+            return response.json();
+        }).then(function(json)) {
+            this.log('Current source is %s.', json.id);
+            callback(null, json.id);
         });
     },
 
@@ -66,8 +74,10 @@ TVAccessory.prototype = {
 
         fetch(this.api_url + "/audio/volume")
         .then(function(repsonse){
-            this.log('Current volume is %s', response.current);
-            callback(null, response.current);
+            return response.json();
+        }).then(function(json)) {
+            this.log('Current volume is %s', json.current);
+            callback(null, json.current);
         }.bind(this));
     },
 
