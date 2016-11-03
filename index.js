@@ -20,6 +20,11 @@ function mytvAccessory(log, config) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     };
+    this.info = {
+        manufacturer : "name",
+        model : "model",
+        serialnumber : "0";
+    };
 
     this.status_url = "http://"+this.ip_address+":1925/"+this.api_version+"/input/key";
     this.key_body = JSON.stringify({"key": "Home"});
@@ -28,7 +33,7 @@ function mytvAccessory(log, config) {
     .then(function(repsonse) {
         return response.json();
     }).then(function(json) {
-        this.info.Manufacturer = json.name;
+        this.info.manufacturer = json.name;
         this.info.model = json.model;
         this.info.serialnumber = json.serialnumber;
     }.bind(this));
