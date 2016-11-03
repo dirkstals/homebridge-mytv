@@ -1,4 +1,5 @@
 var fetch = require('node-fetch');
+var inherits = require('util').inherits;
 var Service;
 var Characteristic, VolumeCharacteristic;
 
