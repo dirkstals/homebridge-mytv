@@ -6,7 +6,7 @@ module.exports = function(homebridge)
 {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-mytv", "TV", TVAccessory);
+    homebridge.registerAccessory("homebridge-mytv", "TVAccessory", TVAccessory);
 }
 
 function TVAccessory(log, config) {
