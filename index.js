@@ -70,7 +70,7 @@ mytvAccessory.prototype = {
         }).then(function(json) {
             this.log('Current source is %s.', json.id);
             callback(null, json.id);
-        });
+        }.bind(this));
     },
 
     getVolume: function(callback, context) {
