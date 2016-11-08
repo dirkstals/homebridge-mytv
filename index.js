@@ -39,7 +39,7 @@ function mytvAccessory(log, config) {
     this.maxVolume = config['maxVolume'] || 60;
 
     this.api_version = 1;
-    this.api_url = "http://"+this.ip_address+":1925/"+this.api_version+"/";
+    this.api_url = "http://"+this.ip+":1925/"+this.api_version+"/";
     this.json_headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ function mytvAccessory(log, config) {
         serialnumber : "0"
     };
 
-    this.status_url = "http://"+this.ip_address+":1925/"+this.api_version+"/input/key";
+    this.status_url = "http://"+this.ip+":1925/"+this.api_version+"/input/key";
     this.key_body = JSON.stringify({"key": "Home"});
 
 
